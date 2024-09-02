@@ -57,9 +57,9 @@ def fetch(url: str, method="GET", data=None, timeout=None) -> HTTPResponseWrappe
         urlpath = url[len(u.scheme) + len(u.netloc) + 3:]
 
         if not data:
-            conn.request(method, urlpath)
+            conn.request(method, urlpath, headers={"Connection": "close", "User-Agent": "python-requests/2.31.0"})
         else:
-            conn.request(method, urlpath, json.dumps(data), headers={"Content-Type": "application/json"})
+            conn.request(method, urlpath, json.dumps(data), headers={"Content-Type": "application/json", "Connection": "close", "User-Agent": "python-requests/2.31.0"})
         response = conn.getresponse()
         content = bytearray()
         while chunk := response.read(4096):
